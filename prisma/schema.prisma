@@ -9,3 +9,61 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Theme{
+  id  Int @id @default(autoincrement())
+  name String @db.VarChar(250)
+  question Question[]
+  lesson Lesson[]
+}
+
+model Semester{
+  id  Int @id @default(autoincrement())
+  name String @db.VarChar(250)
+  lesson Lesson[]
+}
+
+model User {
+  id  Int @id @default(autoincrement())
+  googleId  String @unique @db.VarChar(250)
+  isAdmin Boolean @default(false)
+  name  String  @db.VarChar(250)
+  picture String?  @db.VarChar(250)
+  question  Question[]
+  answer  Answer[]
+}
+
+model Question{
+  id  Int @id @default(autoincrement())
+  description String @db.VarChar(250)
+  createdAt DateTime @default(now())
+  title String @db.VarChar(250)
+  theme Theme @relation(fields: [idTheme], references: [id])
+  idTheme  Int
+  author  User  @relation(fields: [idUser], references: [id])
+  idUser  Int
+  answer Answer[]
+}
+
+model Answer {
+  id  Int @id @default(autoincrement())
+  description String @db.VarChar(250)
+  createdAt DateTime @default(now())
+  question Question @relation(fields: [idQuestion], references: [id])
+  idQuestion  Int
+  author  User  @relation(fields: [idUser], references: [id])
+  idUser  Int
+}
+
+model Lesson{
+  id  Int @id @default(autoincrement())
+  link String @db.VarChar(250)
+  description String @db.VarChar(250)
+  date DateTime
+  local String @db.VarChar(250)
+  title String @db.VarChar(250)
+  theme Theme @relation(fields: [idTheme], references: [id])
+  idTheme  Int
+  semester Semester @relation(fields: [idSemester], references: [id])
+  idSemester  Int
+}
