@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {
@@ -26,6 +27,7 @@ model Semester{
 model User {
   id  Int @id @default(autoincrement())
   googleId  String @unique @db.VarChar(250)
+  currentRefreshTokenId String?  @db.Uuid
   isAdmin Boolean @default(false)
   name  String  @db.VarChar(250)
   picture String?  @db.VarChar(250)
