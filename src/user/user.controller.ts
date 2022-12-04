@@ -1,11 +1,12 @@
 import { Controller, Get, HttpCode, HttpStatus, UseGuards, Param, Patch, NotFoundException, Req} from "@nestjs/common";
 import { UserService } from "./user.service";
-import { AuthRequest } from "src/auth/interface";
+import { AuthRequest } from '../auth/interface';
 import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 @Controller('users')
 export class UserController{
     constructor(private userService: UserService){}
-    
+
+    @UseGuards(JwtAuthGuard)
     @Patch(':id')
     @HttpCode(HttpStatus.OK)
     async turnInAdmin(@Param() params){
@@ -19,16 +20,18 @@ export class UserController{
     @UseGuards(JwtAuthGuard)
     @Get('me')
     async getMe(@Req() req: AuthRequest) {
-        const user = await this.userService.getUser(req.user.googleId);
     
-        if (!user) throw new NotFoundException();
+    const user = await this.userService.getUser(req.user.googleId);
+    
+    if (!user) throw new NotFoundException();
 
-        return user;
-    }
+    return user;
+  }
 
     @Get()
-    getAllUsers(){
-        return this.userService.getUsers(); 
+    async getAllUsers(){
+        const users = await this.userService.getUsers(); 
+        return users;
     }
 
 }

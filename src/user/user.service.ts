@@ -29,6 +29,7 @@ export class UserService {
         return await this.prismaService.user.findMany(
             {
                 select:{
+                    id: true,
                     name: true,
                     isAdmin: true
                 }
