@@ -7,9 +7,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { SemesterModule } from './semester/semester.module';
 import { UserModule } from './user/user.module';
 import { ThemeModule } from './theme/theme.module';
+import { LessonModule } from './lesson/lesson.module';
 
 @Module({
-imports: [PrismaModule,UserModule,ConfigModule.forRoot(),AuthModule,SemesterModule,ThemeModule],
+imports: [PrismaModule,UserModule,ConfigModule.forRoot(),AuthModule,SemesterModule,ThemeModule,LessonModule],
   controllers: [AppController],
   providers: [AppService]
 })

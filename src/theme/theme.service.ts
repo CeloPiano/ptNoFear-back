@@ -57,4 +57,18 @@ export class ThemeService {
             }
         })
     }
+
+    async getTheme(id: number){
+        return await this.prismaService.theme.findUnique(
+            {
+                where:{
+                    id,
+                },
+                select:{
+                    id: true,
+                    name: true
+                }
+            }
+        );
+    }
 }

@@ -28,6 +28,13 @@ export class ThemeController{
         return themes;
     }
 
+    @Get(':id')
+    @HttpCode(HttpStatus.OK)
+    async getTheme(@Param() params){
+        const theme = await this.themeService.getTheme(Number(params.id))
+        return theme
+    }
+
     @Post('delete')
     async deleteTheme(@Body('id') id: number){
         const theme = await this.themeService.deleteTheme(Number(id))

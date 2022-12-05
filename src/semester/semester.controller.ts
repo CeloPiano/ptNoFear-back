@@ -28,6 +28,14 @@ export class SemesterController{
         return semesters;
     }
 
+
+    @Get(':id')
+    @HttpCode(HttpStatus.OK)
+    async getSemester(@Param() params){
+        const semester = await this.semesterService.getSemester(Number(params.id))
+        return semester
+    }
+
     @Post('delete')
     async deleteSemester(@Body('id') id: number){
         const semester = await this.semesterService.deleteSemester(Number(id))

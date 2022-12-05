@@ -57,4 +57,18 @@ export class SemesterService {
             }
         })
     }
+
+    async getSemester(id: number){
+        return await this.prismaService.semester.findUnique(
+            {
+                where:{
+                    id,
+                },
+                select:{
+                    id: true,
+                    name: true
+                }
+            }
+        );
+    }
 }
